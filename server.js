@@ -129,6 +129,16 @@ app.get("/api/attendance", (req, res) => {
   }
 });
 
+app.delete("/api/attendance", (req, res) => {
+  try {
+    const result = stmts.clearAttendance.run();
+    console.log(`  [dev] Cleared attendance records: ${result.changes}`);
+    res.json({ success: true, cleared: result.changes });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get("/api/stats", (req, res) => {
   try {
     const stats = stmts.getAttendanceStats.all();

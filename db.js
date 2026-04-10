@@ -47,6 +47,8 @@ const stmts = {
     INSERT INTO attendance (student_id) VALUES (?)
   `),
 
+  clearAttendance: db.prepare("DELETE FROM attendance"),
+
   getLastAttendance: db.prepare(`
     SELECT * FROM attendance
     WHERE student_id = ?

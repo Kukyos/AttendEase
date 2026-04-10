@@ -66,6 +66,7 @@ themeToggle.addEventListener("click", () => {
 const devToggle = $("#dev-toggle");
 const devPanel = $("#dev-panel");
 const devClose = $("#dev-close");
+const devClearAttendance = $("#dev-clear-attendance");
 
 if (devToggle) {
   devToggle.addEventListener("click", () => devPanel.classList.toggle("hidden"));
@@ -92,6 +93,26 @@ if (devToggle) {
     }).catch(() => showToast("Test scan failed", "error"));
   });
 }
+
+devClearAttendance?.addEventListener("click", async () => {
+  if (!confirm("Clear all attendance records? (Demo action)")) return;
+
+  try {
+    const res = await fetch(`${API}/api/attendance`, { method: "DELETE" });
+    const data = await res.json();
+
+    if (!res.ok) {
+      showToast(data.error || "Failed to clear attendance", "error");
+      return;
+    }
+
+    showToast(`Cleared ${data.cleared || 0} attendance records`);
+    loadAttendance();
+    loadStats();
+  } catch {
+    showToast("Network error while clearing attendance", "error");
+  }
+});
 
 // ── Tab Indicator ────────────────────────────────────────────────────
 function moveIndicator(tab) {
