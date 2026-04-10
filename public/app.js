@@ -32,10 +32,66 @@ function setTheme(theme) {
 // Init theme
 setTheme(getTheme());
 
+let faultyRef = null;
+
+function initBackground() {
+  if (window.initFaultyTerminal) {
+    const isDark = getTheme() === "dark";
+    faultyRef = window.initFaultyTerminal(document.getElementById("ambient-bg"), {
+      tint: isDark ? "#ffffff" : "#000000",
+      brightness: isDark ? 0.3 : 0.05,
+      curvature: 0.1,
+      glitchAmount: 1,
+      mouseReact: true,
+      scale: 1.5,
+    });
+  }
+}
+
+// Call on startup
+document.addEventListener("DOMContentLoaded", initBackground);
+
 themeToggle.addEventListener("click", () => {
   const next = getTheme() === "dark" ? "light" : "dark";
   setTheme(next);
+  
+  if (faultyRef) {
+    const isDark = next === "dark";
+    faultyRef.setTint(isDark ? "#ffffff" : "#000000");
+    faultyRef.setBrightness(isDark ? 0.3 : 0.05);
+  }
 });
+
+// ── Dev Panel ────────────────────────────────────────────────────────
+const devToggle = $("#dev-toggle");
+const devPanel = $("#dev-panel");
+const devClose = $("#dev-close");
+
+if (devToggle) {
+  devToggle.addEventListener("click", () => devPanel.classList.toggle("hidden"));
+  devClose.addEventListener("click", () => devPanel.classList.add("hidden"));
+
+  $("#dev-brightness")?.addEventListener("input", (e) => {
+    faultyRef?.setBrightness(parseFloat(e.target.value));
+  });
+  $("#dev-curvature")?.addEventListener("input", (e) => {
+    faultyRef?.setCurvature(parseFloat(e.target.value));
+  });
+  $("#dev-glitch")?.addEventListener("input", (e) => {
+    faultyRef?.setGlitchAmount(parseFloat(e.target.value));
+  });
+  $("#dev-sim-scan")?.addEventListener("click", () => {
+    fetch(`${API}/api/attendance`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uid: "A3B2C1D0" })
+    }).then(r => r.json()).then(data => {
+      showToast(data.error ? data.error : "Test scan recorded", data.error ? "error" : "success");
+      if ($(".tab.active").dataset.tab === "attendance") loadAttendance();
+      if ($(".tab.active").dataset.tab === "stats") loadStats();
+    }).catch(() => showToast("Test scan failed", "error"));
+  });
+}
 
 // ── Tab Indicator ────────────────────────────────────────────────────
 function moveIndicator(tab) {

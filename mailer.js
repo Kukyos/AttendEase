@@ -19,6 +19,7 @@ async function sendAttendanceEmail(studentName, studentEmail, registerNumber, ti
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Referer: "https://attendease.local",
       },
       body: JSON.stringify({
         _subject: `Attendance Marked - ${studentName} (${registerNumber})`,

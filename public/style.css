@@ -125,71 +125,25 @@ body {
 .ambient {
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  pointer-events: auto; /* Allow mouse interaction with FaultyTerminal */
   z-index: 0;
   overflow: hidden;
-}
-
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  will-change: transform;
-  transition: background var(--transition-slow);
-}
-
-.blob-1 {
-  width: 600px;
-  height: 600px;
-  background: var(--blob-1);
-  top: -15%;
-  left: -10%;
-  animation: drift1 25s ease-in-out infinite;
-}
-
-.blob-2 {
-  width: 500px;
-  height: 500px;
-  background: var(--blob-2);
-  bottom: -10%;
-  right: -5%;
-  animation: drift2 30s ease-in-out infinite;
-}
-
-.blob-3 {
-  width: 400px;
-  height: 400px;
-  background: var(--blob-3);
-  top: 40%;
-  left: 50%;
-  animation: drift3 20s ease-in-out infinite;
-}
-
-@keyframes drift1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(60px, 40px) scale(1.05); }
-  66% { transform: translate(-30px, 70px) scale(0.95); }
-}
-
-@keyframes drift2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-50px, -30px) scale(1.08); }
-  66% { transform: translate(40px, -60px) scale(0.96); }
-}
-
-@keyframes drift3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-70px, 50px) scale(1.1); }
 }
 
 /* ── App Container ────────────────────────────────────────────────── */
 
 .app {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   max-width: 980px;
   margin: 0 auto;
   padding: 28px 24px 48px;
+  pointer-events: none; /* Let mouse pass through by default to hit the background */
+}
+
+/* Re-enable pointer events for interactive elements inside .app */
+.header, .tabs, .panel, .dev-panel, .toast, button, input, a {
+  pointer-events: auto;
 }
 
 /* ── Header ───────────────────────────────────────────────────────── */
@@ -231,12 +185,12 @@ body {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
-/* ── Theme Toggle ─────────────────────────────────────────────────── */
+/* ── Theme Toggle & Icon Buttons ──────────────────────────────────── */
 
-.theme-toggle {
+.icon-btn {
   position: relative;
   width: 38px;
   height: 38px;
@@ -254,14 +208,14 @@ body {
   overflow: hidden;
 }
 
-.theme-toggle:hover {
+.icon-btn:hover {
   border-color: var(--accent);
   color: var(--accent);
   box-shadow: var(--shadow-glow);
   transform: scale(1.05);
 }
 
-.theme-toggle:active {
+.icon-btn:active {
   transform: scale(0.95);
 }
 
@@ -290,6 +244,65 @@ body {
   opacity: 1;
   transform: rotate(0deg) scale(1);
 }
+
+/* ── Dev Panel ────────────────────────────────────────────────────── */
+
+.dev-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-smooth);
+}
+
+.dev-panel:not(.hidden) {
+  animation: formSlide 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dev-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dev-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+
+.dev-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dev-control {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dev-control label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dev-control input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
 
 /* ── Live Indicator ───────────────────────────────────────────────── */
 
