@@ -5,6 +5,7 @@ const db = new Database(path.join(__dirname, "attendance.db"));
 
 // Enable WAL mode for better performance
 db.pragma("journal_mode = WAL");
+db.pragma("foreign_keys = ON");
 
 // Create tables
 db.exec(`

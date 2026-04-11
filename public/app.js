@@ -268,7 +268,7 @@ async function loadStudents() {
           <td>${esc(s.email)}</td>
           <td><span class="rfid-code">${esc(s.rfid_uid)}</span></td>
           <td>
-            <button class="btn-danger" onclick="deleteStudent(${s.id})" title="Remove">
+            <button class="btn-danger btn-delete-student" data-id="${s.id}" title="Remove">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 5 6 21 6"/>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
@@ -282,6 +282,14 @@ async function loadStudents() {
     showToast("Failed to load students", "error");
   }
 }
+
+studentsBody.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-delete-student");
+  if (btn) {
+    const id = btn.dataset.id;
+    if (id) deleteStudent(id);
+  }
+});
 
 async function saveStudent() {
   const name = $("#input-name").value.trim();

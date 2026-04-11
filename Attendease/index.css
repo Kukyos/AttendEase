@@ -1,0 +1,297 @@
+/* ── Attendease Presentation – Pure Black + White Glow Theme ────────────── */
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  color: #f0f0f0;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Scrollbar hide */
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Glow System ───────────────────────────────────────────────────────── */
+
+@keyframes subtle-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.06), inset 0 0 8px rgba(255, 255, 255, 0.02);
+  }
+
+  50% {
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.12), inset 0 0 12px rgba(255, 255, 255, 0.04);
+  }
+}
+
+@keyframes border-breathe {
+
+  0%,
+  100% {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  50% {
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+@keyframes glow-arrow {
+  0% {
+    opacity: 0.3;
+    transform: translateX(-3px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+
+  100% {
+    opacity: 0.3;
+    transform: translateX(-3px);
+  }
+}
+
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes counter-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ── Utility Classes ───────────────────────────────────────────────────── */
+
+.glow-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  animation: subtle-glow 4s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.glow-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.20);
+}
+
+.glow-border {
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  animation: border-breathe 4s ease-in-out infinite;
+}
+
+.glow-arrow {
+  animation: glow-arrow 2s ease-in-out infinite;
+}
+
+.scan-line-effect {
+  animation: scan-line 2s linear infinite;
+}
+
+.counter-pulse {
+  animation: counter-pulse 2.5s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+/* ── Slide accent ──────────────────────────────────────────────────────── */
+
+.accent-text {
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+.accent-dim {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.accent-muted {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Stat highlight ────────────────────────────────────────────────────── */
+
+.stat-value {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 0 24px rgba(255, 255, 255, 0.2);
+}
+
+/* ── Branch lines ──────────────────────────────────────────────────────── */
+
+.branch-valid {
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  padding-left: 1.5rem;
+}
+
+.branch-invalid {
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
+  padding-left: 1.5rem;
+}
+
+/* ── Testimony ─────────────────────────────────────────────────────────── */
+
+.testimony-card {
+  position: relative;
+  padding-left: 1.25rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.testimony-card::before {
+  content: '"';
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.08);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+/* ── Recharts overrides ────────────────────────────────────────────────── */
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.06) !important;
+}
+
+.recharts-text {
+  fill: rgba(255, 255, 255, 0.4) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+}
+
+/* ── Photo placeholder ─────────────────────────────────────────────────── */
+
+.photo-placeholder {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.photo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* ── Progress bar bottom ───────────────────────────────────────────────── */
+
+.progress-bar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar-fill {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* ── Code blocks ──────────────────────────────────────────────────────── */
+
+pre {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+pre::-webkit-scrollbar {
+  display: none;
+}
+
+pre code {
+  tab-size: 2;
+}
+
+/* ── Demo iframe ──────────────────────────────────────────────────────── */
+
+iframe {
+  border: none;
+  background: #06060a;
+}
+
+/* ── Spin animation ───────────────────────────────────────────────────── */
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ── Try Demo button pulse ────────────────────────────────────────────── */
+
+@keyframes demo-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+  }
+}

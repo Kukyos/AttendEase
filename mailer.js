@@ -34,15 +34,18 @@ async function sendAttendanceEmail(studentName, studentEmail, registerNumber, ti
 
     const data = await res.json();
 
-    if (data.success === "true" || data.success === true) {
-      console.log(`  [email] Sent to ${recipientEmail}`);
-      return true;
-    } else {
-      console.log(`  [email] Failed:`, data.message || "Unknown error");
+    if (!data.success || data.success === "false") {
+      console.warn(`\n  [email] FormSubmit Error: ${data.message || "Unknown error"}`);
+      if (data.message && data.message.includes("Activation")) {
+        console.log(`  -> ACTION REQUIRED: You must open ${recipientEmail} and click the Activation Link sent by FormSubmit before emails will work!`);
+      }
       return false;
+    } else {
+      console.log(`  [email] Notification successfully sent to ${recipientEmail}`);
+      return true;
     }
   } catch (err) {
-    console.log(`  [email] Error: ${err.message}`);
+    console.error(`  [email] Network error details: ${err.message}`);
     return false;
   }
 }
